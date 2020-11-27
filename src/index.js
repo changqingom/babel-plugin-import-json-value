@@ -61,7 +61,10 @@ module.exports = function (_ref) {
       ImportDeclaration(path, file) {
         // console.log(path.node);
         // console.log(path.node.specifiers);
-        if (nodePath.extname(path.node.source.value) === ".json") {
+        if (
+          path.node.source &&
+          nodePath.extname(path.node.source.value) === ".json"
+        ) {
           const keyObj = getKeyObj(path.node.specifiers, "imported", "local");
           const valObj = getValObj(file, path.node.source.value, keyObj);
           replaceStatement(path, t, keyObj, valObj);
@@ -74,10 +77,12 @@ module.exports = function (_ref) {
         const kind = path.node.kind;
         const id = path.node.declarations[0].id;
         const init = path.node.declarations[0].init;
-        console.log(id.properties);
         if (
+          init &&
           init.type === "CallExpression" &&
-          nodePath.extname(init.arguments[0].value) === ".json"
+          init.arguments &&
+          init.arguments[0] &&
+          nodePath.extname(String(init.arguments[0].value) || "") === ".json"
         ) {
           const keyObj = getKeyObj(id.properties, "key", "value");
           const valObj = getValObj(file, init.arguments[0].value, keyObj);
