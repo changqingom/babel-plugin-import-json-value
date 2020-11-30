@@ -13,7 +13,7 @@
     "/lib"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "babel test/main.js --config-file ./test/babel.config.json -o test/main_out.js",
     "compile:watch": "babel src/ -w --out-dir lib/ --source-maps",
     "compile:lib": "babel src/ --out-dir lib/ --source-maps"
   },

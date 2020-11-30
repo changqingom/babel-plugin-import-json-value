@@ -1,0 +1,7 @@
+{
+  "name": "babel-plugin-import-json-value",
+  "version": "0.0.3",
+  "devDependencies": {
+    "@babel/cli": "^7.12.8"
+  }
+}
