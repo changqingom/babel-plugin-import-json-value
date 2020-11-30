@@ -52,7 +52,11 @@ module.exports = function (_ref) {
           replaceStatement(path, t, decObj);
         } else if (init?.type === "MemberExpression") {
           const temObj = getMemberNodePath(init);
-          if (nodePath.extname(temObj.path) === ".json") {
+          if (
+            temObj?.path &&
+            temObj?.keyList &&
+            nodePath.extname(temObj.path) === ".json"
+          ) {
             let valObj = getJsonValue(file.filename, temObj.path);
             temObj.keyList.forEach((val) => {
               valObj = valObj[val];
