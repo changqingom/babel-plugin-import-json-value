@@ -7,7 +7,7 @@ module.exports = function (_ref) {
     visitor: {
       ImportDeclaration(path, file) {
         const { source, specifiers } = path.node;
-        if (nodePath.extname(source.value) === ".json") {
+        if (nodePath.extname(source?.value) === ".json") {
           const valObj = getJsonValue(file.filename, source.value);
           let decObj = {};
           for (const specifier of specifiers) {
@@ -31,9 +31,9 @@ module.exports = function (_ref) {
           declarations: [{ id, init }],
         } = path.node;
         if (
-          init.type === "CallExpression" &&
-          init.callee.name === "require" &&
-          init.arguments[0].type === "StringLiteral" &&
+          init?.type === "CallExpression" &&
+          init.callee?.name === "require" &&
+          init.arguments?.[0].type === "StringLiteral" &&
           nodePath.extname(init.arguments[0].value) === ".json"
         ) {
           const valObj = getJsonValue(file.filename, init.arguments[0].value);
@@ -50,7 +50,7 @@ module.exports = function (_ref) {
             };
           }
           replaceStatement(path, t, decObj);
-        } else if (init.type === "MemberExpression") {
+        } else if (init?.type === "MemberExpression") {
           const temObj = getMemberNodePath(init);
           if (nodePath.extname(temObj.path) === ".json") {
             let valObj = getJsonValue(file.filename, temObj.path);
@@ -72,9 +72,6 @@ module.exports = function (_ref) {
             replaceStatement(path, t, decObj);
           }
         }
-      },
-      ExportNamedDeclaration(path, file) {
-
       },
     },
   };
